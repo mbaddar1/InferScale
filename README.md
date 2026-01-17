@@ -82,6 +82,9 @@ GenMux is **not tied to a single paper or model** and aims to serve as a general
 
 ---
 
+## Resources
+
+---
 ## License
 
 [Add your license here]
