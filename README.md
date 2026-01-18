@@ -87,4 +87,12 @@ GenMux is **not tied to a single paper or model** and aims to serve as a general
 ---
 ## License
 
+This project is licensed under the **Apache License, Version 2.0**.
+
+You may use, modify, and distribute this software in compliance with the License.
+A copy of the license is available at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+
 [Add your license here]
