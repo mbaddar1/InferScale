@@ -12,4 +12,4 @@ InferScale is designed for production use in AI agents, reasoning systems, enter
 
 1. https://open.substack.com/pub/sebastianraschka/p/categories-of-inference-time-scaling?utm_campaign=post-expanded-share&utm_medium=web
 2. https://arxiv.org/abs/2510.10787
-3. 
+3. https://medium.com/@adnanmasood/inference-time-scaling-how-modern-ai-models-think-longer-to-perform-better-a1e1a8155fbd
