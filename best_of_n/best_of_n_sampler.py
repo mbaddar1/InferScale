@@ -25,5 +25,24 @@ class BestOfNSampler:
             logger.info("BestOfNSampler successfully initialized")
 
     def generate(self,queries:List[str],n:int) -> dict:
+        # TODO
+        #   1. Use lambda map to reduce loops
+        #   2. Support parallel processing (parallel sampling)
+        #   3. Smart model selector (based on query intent identification and the task at hand
         for q in queries:
-            pass
+            for j in range(len(self.models)):
+                for i in range(n):
+                    tokenizer = self.tokenizers[j]
+                    model = self.models[j]
+                    inputs = tokenizer(q, return_tensors="pt", max_length=1024, truncation=True)
+                    summary_ids = model.generate(
+                        inputs["input_ids"],
+                        max_length=150,
+                        min_length=40,
+                        no_repeat_ngram_size=3,
+                        length_penalty=2.0,
+                        num_beams=4,
+                        early_stopping=True
+                    )
+                    result = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+                    print(f"query = {q},sample # {i+1} , result = {result}")
