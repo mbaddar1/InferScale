@@ -28,7 +28,7 @@ class BestOfNSampler:
             logger.info("BestOfNSampler successfully initialized")
 
     def generate(self,queries:List[str],n:int) -> dict:
-        # TODO
+        # TODO (Later Improvements)
         #   1. Use lambda map to reduce loops
         #   2. Support parallel processing (parallel sampling)
         #   3. Smart model selector (based on query intent identification and the task at hand
