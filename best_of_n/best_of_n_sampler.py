@@ -8,6 +8,9 @@ transformers_logging.enable_progress_bar()
 This class is inspired by the BestOfNSampler in TRL/HuggingFace
 https://huggingface.co/docs/trl/main/en/best_of_n
 """
+# TODO Dev
+#   1. Perturbation param to generate different summarization each time
+#       best_of_n/best_of_n_sampler.py:41
 class BestOfNSampler:
     SUPPORTED_MODELS = ["Sachin21112004/distilbart-news-summarizer"]
     def __init__(self,models_names:List[str],evaluation_metrics:List[str]):
