@@ -2,6 +2,8 @@ from typing import List
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from transformers import logging as transformers_logging
 from loguru import logger
+from bert_score import score
+
 transformers_logging.set_verbosity_info()
 transformers_logging.enable_progress_bar()
 """
@@ -13,7 +15,7 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #       best_of_n/best_of_n_sampler.py:41
 class BestOfNSampler:
     SUPPORTED_MODELS = ["Sachin21112004/distilbart-news-summarizer"]
-    def __init__(self,models_names:List[str],evaluation_metrics:List[str]):
+    def __init__(self,models_names:List[str],evaluation_metric:str):
         for model_name in models_names:
             if model_name not in self.SUPPORTED_MODELS:
                 raise ValueError("Invalid model: {}".format(model_name))
@@ -24,7 +26,8 @@ class BestOfNSampler:
                 tokenizer = AutoTokenizer.from_pretrained(model_name)
                 self.models.append(model)
                 self.tokenizers.append(tokenizer)
-            self.evaluation_metrics = evaluation_metrics
+            self.evaluation_metric = evaluation_metric
+
             logger.info("BestOfNSampler successfully initialized")
 
     def generate(self,queries:List[str],n:int) -> dict:
@@ -32,8 +35,9 @@ class BestOfNSampler:
         #   1. Use lambda map to reduce loops
         #   2. Support parallel processing (parallel sampling)
         #   3. Smart model selector (based on query intent identification and the task at hand
-        for q in queries:
+        for u,q in enumerate(queries):
             for j in range(len(self.models)):
+                candidates = []
                 for i in range(n):
                     tokenizer = self.tokenizers[j]
                     model = self.models[j]
@@ -45,7 +49,16 @@ class BestOfNSampler:
                         no_repeat_ngram_size=3,
                         length_penalty=2.0,
                         num_beams=4,
+                        do_sample=True,
+                        top_p=0.95,
+                        temperature=1.5,
                         early_stopping=True
                     )
+
                     result = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-                    print(f"query = {q},sample # {i+1} , result = {result}")
+                    candidates.append(result)
+                    # print(f"query # {u},sample # {i+1} , len(q) = {len(q)}, len(result) = {len(result)}")
+                refs = [q]*n
+                print("Calculating scores") # FIXME - bertscore calculation stucked
+                bert_score_vals = score(cands=candidates,refs=refs,lang="en",model_type="bert-base-uncased")
+                print(bert_score_vals)
