@@ -3,6 +3,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from transformers import logging as transformers_logging
 from loguru import logger
 from bert_score import score
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
 
 transformers_logging.set_verbosity_info()
 transformers_logging.enable_progress_bar()
@@ -27,7 +29,7 @@ class BestOfNSampler:
                 self.models.append(model)
                 self.tokenizers.append(tokenizer)
             self.evaluation_metric = evaluation_metric
-
+            self.eval_embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
             logger.info("BestOfNSampler successfully initialized")
 
     def generate(self,queries:List[str],n:int) -> dict:
@@ -58,7 +60,11 @@ class BestOfNSampler:
                     result = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
                     candidates.append(result)
                     # print(f"query # {u},sample # {i+1} , len(q) = {len(q)}, len(result) = {len(result)}")
-                refs = [q]*n
-                print("Calculating scores") # FIXME - bertscore calculation stucked
-                bert_score_vals = score(cands=candidates,refs=refs,lang="en",model_type="bert-base-uncased")
-                print(bert_score_vals)
+                # print("Calculating scores") # FIXME - bertscore calculation stucked
+                # bert_score_vals = score(cands=candidates,refs=refs,lang="en",model_type="bert-base-uncased")
+                # print(bert_score_vals)
+
+                doc_emb = self.eval_embedding_model.encode([q]*n)
+                sum_emb = self.eval_embedding_model.encode(candidates)
+                eval_score = cosine_similarity(sum_emb, doc_emb)[:,0]
+                print(f"q # {u} , eval_score : {eval_score}")
