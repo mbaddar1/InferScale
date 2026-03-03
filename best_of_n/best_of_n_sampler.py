@@ -90,6 +90,6 @@ class BestOfNSampler:
                     best_candidate = candidates[max_eval_score_index]
                     best_model = self.models_names[j]
 
-                print(f"q # {u} , model = {self.models_names[j]},max_eval_score_per_model : {max_eval_score_per_model}")
+                # print(f"q # {u} , model = {self.models_names[j]},max_eval_score_per_model : {max_eval_score_per_model}")
             best_results.append({"response":best_candidate,"score":float(max_score),"model":best_model})
         return best_results
