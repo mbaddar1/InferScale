@@ -1,0 +1,464 @@
+/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/bin/python /home/mbaddar/Documents/mbaddar/betaflow/InferScale/examples/best_of_n_sampler_example1.py
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--Sachin21112004--distilbart-news-summarizer/snapshots/a643675d1295fb905d81896b7aa4bd3dbfe749ba/config.json
+Model config BartConfig {
+  "_num_labels": 3,
+  "activation_dropout": 0.0,
+  "activation_function": "gelu",
+  "add_bias_logits": false,
+  "add_final_layer_norm": false,
+  "architectures": [
+    "BartForConditionalGeneration"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 0,
+  "classif_dropout": 0.0,
+  "classifier_dropout": 0.0,
+  "d_model": 1024,
+  "decoder_attention_heads": 16,
+  "decoder_ffn_dim": 4096,
+  "decoder_layerdrop": 0.0,
+  "decoder_layers": 6,
+  "decoder_start_token_id": 2,
+  "dropout": 0.1,
+  "encoder_attention_heads": 16,
+  "encoder_ffn_dim": 4096,
+  "encoder_layerdrop": 0.0,
+  "encoder_layers": 12,
+  "eos_token_id": 2,
+  "extra_pos_embeddings": 2,
+  "force_bos_token_to_be_generated": true,
+  "gradient_checkpointing": false,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "init_std": 0.02,
+  "is_decoder": false,
+  "is_encoder_decoder": true,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "max_position_embeddings": 1024,
+  "model_type": "bart",
+  "normalize_before": false,
+  "normalize_embedding": true,
+  "num_hidden_layers": 12,
+  "output_past": true,
+  "pad_token_id": 1,
+  "prefix": " ",
+  "replacing_rate": 0,
+  "scale_embedding": false,
+  "static_position_embeddings": false,
+  "student_decoder_layers": null,
+  "student_encoder_layers": null,
+  "task_specific_params": {
+    "summarization": {
+      "early_stopping": true,
+      "length_penalty": 2.0,
+      "max_length": 142,
+      "min_length": 56,
+      "no_repeat_ngram_size": 3,
+      "num_beams": 4
+    }
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 50264
+}
+
+loading weights file model.safetensors from cache at /home/mbaddar/.cache/huggingface/hub/models--Sachin21112004--distilbart-news-summarizer/snapshots/a643675d1295fb905d81896b7aa4bd3dbfe749ba/model.safetensors
+Since the `dtype` attribute can't be found in model's config object, will use dtype={dtype} as derived from model's weights
+Please make sure the generation config includes `forced_bos_token_id=0`.
+Generate config GenerationConfig {
+  "bos_token_id": 0,
+  "decoder_start_token_id": 2,
+  "eos_token_id": 2,
+  "forced_bos_token_id": 0,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 1,
+  "use_cache": true
+}
+
+Loading weights: 100%|██████████| 356/356 [00:00<00:00, 5867.22it/s, Materializing param=model.encoder.layers.11.self_attn_layer_norm.weight]
+Generation config file not found, using a generation config created from the model config.
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--Sachin21112004--distilbart-news-summarizer/snapshots/a643675d1295fb905d81896b7aa4bd3dbfe749ba/config.json
+Generate config GenerationConfig {
+  "bos_token_id": 0,
+  "decoder_start_token_id": 2,
+  "early_stopping": true,
+  "eos_token_id": 2,
+  "forced_bos_token_id": 0,
+  "forced_eos_token_id": 2,
+  "length_penalty": 2.0,
+  "max_length": 142,
+  "min_length": 56,
+  "no_repeat_ngram_size": 3,
+  "num_beams": 4,
+  "pad_token_id": 1,
+  "use_cache": true
+}
+
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--Sachin21112004--distilbart-news-summarizer/snapshots/a643675d1295fb905d81896b7aa4bd3dbfe749ba/config.json
+Model config BartConfig {
+  "_num_labels": 3,
+  "activation_dropout": 0.0,
+  "activation_function": "gelu",
+  "add_bias_logits": false,
+  "add_final_layer_norm": false,
+  "architectures": [
+    "BartForConditionalGeneration"
+  ],
+  "attention_dropout": 0.0,
+  "bos_token_id": 0,
+  "classif_dropout": 0.0,
+  "classifier_dropout": 0.0,
+  "d_model": 1024,
+  "decoder_attention_heads": 16,
+  "decoder_ffn_dim": 4096,
+  "decoder_layerdrop": 0.0,
+  "decoder_layers": 6,
+  "decoder_start_token_id": 2,
+  "dropout": 0.1,
+  "encoder_attention_heads": 16,
+  "encoder_ffn_dim": 4096,
+  "encoder_layerdrop": 0.0,
+  "encoder_layers": 12,
+  "eos_token_id": 2,
+  "extra_pos_embeddings": 2,
+  "force_bos_token_to_be_generated": true,
+  "gradient_checkpointing": false,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "init_std": 0.02,
+  "is_decoder": false,
+  "is_encoder_decoder": true,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "max_position_embeddings": 1024,
+  "model_type": "bart",
+  "normalize_before": false,
+  "normalize_embedding": true,
+  "num_hidden_layers": 12,
+  "output_past": true,
+  "pad_token_id": 1,
+  "prefix": " ",
+  "replacing_rate": 0,
+  "scale_embedding": false,
+  "static_position_embeddings": false,
+  "student_decoder_layers": null,
+  "student_encoder_layers": null,
+  "task_specific_params": {
+    "summarization": {
+      "early_stopping": true,
+      "length_penalty": 2.0,
+      "max_length": 142,
+      "min_length": 56,
+      "no_repeat_ngram_size": 3,
+      "num_beams": 4
+    }
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 50264
+}
+
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--google--pegasus-xsum/snapshots/8d8ffc158a3bee9fbb03afacdfc347c823c5ec8b/config.json
+Model config PegasusConfig {
+  "activation_dropout": 0.1,
+  "activation_function": "relu",
+  "add_bias_logits": false,
+  "add_final_layer_norm": true,
+  "architectures": [
+    "PegasusForConditionalGeneration"
+  ],
+  "attention_dropout": 0.1,
+  "bos_token_id": 0,
+  "classif_dropout": 0.0,
+  "classifier_dropout": 0.0,
+  "d_model": 1024,
+  "decoder_attention_heads": 16,
+  "decoder_ffn_dim": 4096,
+  "decoder_layerdrop": 0.0,
+  "decoder_layers": 16,
+  "decoder_start_token_id": 0,
+  "do_blenderbot_90_layernorm": false,
+  "dropout": 0.1,
+  "encoder_attention_heads": 16,
+  "encoder_ffn_dim": 4096,
+  "encoder_layerdrop": 0.0,
+  "encoder_layers": 16,
+  "eos_token_id": 1,
+  "extra_pos_embeddings": 0,
+  "force_bos_token_to_be_generated": false,
+  "forced_eos_token_id": 1,
+  "gradient_checkpointing": false,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "init_std": 0.02,
+  "is_decoder": false,
+  "is_encoder_decoder": true,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "max_position_embeddings": 512,
+  "model_type": "pegasus",
+  "normalize_before": true,
+  "normalize_embedding": false,
+  "num_hidden_layers": 16,
+  "pad_token_id": 0,
+  "scale_embedding": true,
+  "static_position_embeddings": true,
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 96103
+}
+
+loading weights file pytorch_model.bin from cache at /home/mbaddar/.cache/huggingface/hub/models--google--pegasus-xsum/snapshots/8d8ffc158a3bee9fbb03afacdfc347c823c5ec8b/pytorch_model.bin
+Attempting to create safetensors variant
+Since the `dtype` attribute can't be found in model's config object, will use dtype={dtype} as derived from model's weights
+Generate config GenerationConfig {
+  "bos_token_id": 0,
+  "decoder_start_token_id": 0,
+  "eos_token_id": 1,
+  "forced_eos_token_id": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "pad_token_id": 0,
+  "use_cache": true
+}
+
+Safetensors PR exists
+Loading weights: 100%|██████████| 680/680 [00:00<00:00, 11886.68it/s, Materializing param=model.shared.weight]
+The tied weights mapping and config for this model specifies to tie model.shared.weight to model.decoder.embed_tokens.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+The tied weights mapping and config for this model specifies to tie model.shared.weight to model.encoder.embed_tokens.weight, but both are present in the checkpoints, so we will NOT tie them. You should update the config with `tie_word_embeddings=False` to silence this warning
+PegasusForConditionalGeneration LOAD REPORT from: google/pegasus-xsum
+Key                                  | Status  |
+-------------------------------------+---------+-
+model.encoder.embed_positions.weight | MISSING |
+model.decoder.embed_positions.weight | MISSING |
+
+Notes:
+- MISSING	:those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+loading configuration file generation_config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--google--pegasus-xsum/snapshots/8d8ffc158a3bee9fbb03afacdfc347c823c5ec8b/generation_config.json
+Generate config GenerationConfig {
+  "bos_token_id": 0,
+  "decoder_start_token_id": 0,
+  "eos_token_id": 1,
+  "forced_eos_token_id": 1,
+  "length_penalty": 0.6,
+  "max_length": 64,
+  "num_beams": 8,
+  "pad_token_id": 0
+}
+
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--google--pegasus-xsum/snapshots/8d8ffc158a3bee9fbb03afacdfc347c823c5ec8b/config.json
+Model config PegasusConfig {
+  "activation_dropout": 0.1,
+  "activation_function": "relu",
+  "add_bias_logits": false,
+  "add_final_layer_norm": true,
+  "architectures": [
+    "PegasusForConditionalGeneration"
+  ],
+  "attention_dropout": 0.1,
+  "bos_token_id": 0,
+  "classif_dropout": 0.0,
+  "classifier_dropout": 0.0,
+  "d_model": 1024,
+  "decoder_attention_heads": 16,
+  "decoder_ffn_dim": 4096,
+  "decoder_layerdrop": 0.0,
+  "decoder_layers": 16,
+  "decoder_start_token_id": 0,
+  "do_blenderbot_90_layernorm": false,
+  "dropout": 0.1,
+  "encoder_attention_heads": 16,
+  "encoder_ffn_dim": 4096,
+  "encoder_layerdrop": 0.0,
+  "encoder_layers": 16,
+  "eos_token_id": 1,
+  "extra_pos_embeddings": 0,
+  "force_bos_token_to_be_generated": false,
+  "forced_eos_token_id": 1,
+  "gradient_checkpointing": false,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1",
+    "2": "LABEL_2"
+  },
+  "init_std": 0.02,
+  "is_decoder": false,
+  "is_encoder_decoder": true,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1,
+    "LABEL_2": 2
+  },
+  "max_position_embeddings": 512,
+  "model_type": "pegasus",
+  "normalize_before": true,
+  "normalize_embedding": false,
+  "num_hidden_layers": 16,
+  "pad_token_id": 0,
+  "scale_embedding": true,
+  "static_position_embeddings": true,
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "use_cache": true,
+  "vocab_size": 96103
+}
+
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json
+Model config BertConfig {
+  "add_cross_attention": false,
+  "architectures": [
+    "BertModel"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": null,
+  "classifier_dropout": null,
+  "eos_token_id": null,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 384,
+  "initializer_range": 0.02,
+  "intermediate_size": 1536,
+  "is_decoder": false,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+loading weights file model.safetensors from cache at /home/mbaddar/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/model.safetensors
+Since the `dtype` attribute can't be found in model's config object, will use dtype={dtype} as derived from model's weights
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5788.19it/s, Materializing param=pooler.dense.weight]
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  |
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  |
+
+Notes:
+- UNEXPECTED	:can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+loading configuration file config.json from cache at /home/mbaddar/.cache/huggingface/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json
+Model config BertConfig {
+  "add_cross_attention": false,
+  "architectures": [
+    "BertModel"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": null,
+  "classifier_dropout": null,
+  "eos_token_id": null,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 384,
+  "initializer_range": 0.02,
+  "intermediate_size": 1536,
+  "is_decoder": false,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 6,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "tie_word_embeddings": true,
+  "transformers_version": "5.2.0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 30522
+}
+
+2026-03-03 21:34:19.025 | INFO     | best_of_n.best_of_n_sampler:__init__:45 - BestOfNSampler successfully initialized
+queries: 0it [00:00, ?it/s]
+models:   0%|          | 0/2 [00:00<?, ?it/s]
+
+response-samples:   0%|          | 0/3 [00:00<?, ?it/s]
+
+response-samples:  33%|███▎      | 1/3 [00:05<00:10,  5.37s/it]
+
+response-samples:  67%|██████▋   | 2/3 [00:09<00:04,  4.89s/it]
+
+response-samples: 100%|██████████| 3/3 [00:15<00:00,  5.18s/it]
+
+models:  50%|█████     | 1/2 [00:15<00:15, 15.76s/it]
+
+response-samples:   0%|          | 0/3 [00:00<?, ?it/s]
+models:  50%|█████     | 1/2 [00:15<00:15, 15.77s/it]
+queries: 0it [00:15, ?it/s]
+Traceback (most recent call last):
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/examples/best_of_n_sampler_example1.py", line 9, in <module>
+    results = bon.generate(queries=queries,n=3)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/best_of_n/best_of_n_sampler.py", line 63, in generate
+    summary_ids = model.generate(
+                  ^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/transformers/generation/utils.py", line 2571, in generate
+    model_kwargs = self._prepare_encoder_decoder_kwargs_for_generation(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/transformers/generation/utils.py", line 938, in _prepare_encoder_decoder_kwargs_for_generation
+    model_kwargs["encoder_outputs"]: ModelOutput = encoder(**encoder_kwargs)  # type: ignore
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 573, in forward
+    embed_pos = self.embed_positions(input_shape)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/transformers/models/pegasus/modeling_pegasus.py", line 102, in forward
+    return super().forward(position_ids)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/modules/sparse.py", line 191, in forward
+    return F.embedding(
+           ^^^^^^^^^^^^
+  File "/home/mbaddar/Documents/mbaddar/betaflow/InferScale/.venv/lib/python3.12/site-packages/torch/nn/functional.py", line 2567, in embedding
+    return torch.embedding(weight, input, padding_idx, scale_grad_by_freq, sparse)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+IndexError: index out of range in self
+
+Process finished with exit code 1
