@@ -18,8 +18,10 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #       best_of_n/best_of_n_sampler.py:41
 #   2. Debug why all best results from one model
 #   2. Use Emb and cos similarity DONE
-#   2. Add resilience to model pretrained load, verbose info and TIMOUT mechanism
-#   3. Test with larger text
+#   . Bug - Why Google pegasus model is unstable
+#   2. Add resilience to model pretrained load, verbose info and TIMEOUT mechanism TODO
+#   3. Test with larger text DONE
+#   . Bug - Problem with some long queries, vocab out of index
 #   4. Tune generate params
 #   5. Document dev steps in the ticket - You build things
 #   6. Add time performance meta data (normalize per token)
@@ -60,36 +62,35 @@ class BestOfNSampler:
                     tokenizer = self.tokenizers[j]
                     model = self.models[j]
                     inputs = tokenizer(q, return_tensors="pt", max_length=1024, truncation=True)
-                    summary_ids = model.generate(
-                        inputs["input_ids"],
-                        max_length=150,
-                        min_length=40,
-                        no_repeat_ngram_size=3,
-                        length_penalty=2.0,
-                        num_beams=4,
-                        do_sample=True,
-                        top_p=0.95,
-                        temperature=1.5,
-                        early_stopping=True
-                    )
+                    try:
+                        summary_ids = model.generate(
+                            inputs["input_ids"],
+                            max_length=150,
+                            min_length=40,
+                            no_repeat_ngram_size=3,
+                            length_penalty=2.0,
+                            num_beams=4,
+                            do_sample=True,
+                            top_p=0.95,
+                            temperature=1.5,
+                            early_stopping=True
+                        )
+                        result = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+                        candidates.append(result)
+                    except Exception as e:
+                        logger.error(f"Exception : For query = {q}, model = {self.models_names[j]}, sample # {i},exception = {e}")
 
-                    result = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-                    candidates.append(result)
-                    # print(f"query # {u},sample # {i+1} , len(q) = {len(q)}, len(result) = {len(result)}")
-                # print("Calculating scores") # FIXME - bertscore calculation stucked
-                # bert_score_vals = score(cands=candidates,refs=refs,lang="en",model_type="bert-base-uncased")
-                # print(bert_score_vals)
-
-                doc_emb = self.eval_embedding_model.encode([q]*n)
-                sum_emb = self.eval_embedding_model.encode(candidates)
-                eval_score = cosine_similarity(sum_emb, doc_emb)[:,0]
-                max_eval_score_index = np.argmax(eval_score)
-                max_eval_score_per_model = eval_score[max_eval_score_index]
-                if max_eval_score_per_model > max_score:
-                    max_score = max_eval_score_per_model
-                    best_candidate = candidates[max_eval_score_index]
-                    best_model = self.models_names[j]
-
-                # print(f"q # {u} , model = {self.models_names[j]},max_eval_score_per_model : {max_eval_score_per_model}")
+                if len(candidates)>0:
+                    doc_emb = self.eval_embedding_model.encode([q]*n)
+                    sum_emb = self.eval_embedding_model.encode(candidates)
+                    eval_score = cosine_similarity(sum_emb, doc_emb)[:,0]
+                    max_eval_score_index = np.argmax(eval_score)
+                    max_eval_score_per_model = eval_score[max_eval_score_index]
+                    if max_eval_score_per_model > max_score:
+                        max_score = max_eval_score_per_model
+                        best_candidate = candidates[max_eval_score_index]
+                        best_model = self.models_names[j]
+                else:
+                    logger.warning("No candidates generated for query = {}".format(q))
             best_results.append({"response":best_candidate,"score":float(max_score),"model":best_model})
         return best_results
