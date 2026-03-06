@@ -19,6 +19,8 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #   2. Debug why all best results from one model
 #   2. Use Emb and cos similarity DONE
 #   . Bug - Why Google pegasus model is unstable
+#   . Add verbosity levels
+#   . Add eval metrics
 #   2. Add resilience to model pretrained load, verbose info and TIMEOUT mechanism TODO
 #   3. Test with larger text DONE
 #   . Bug - Problem with some long queries, vocab out of index
@@ -30,7 +32,7 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #   9. Add requirements.txt
 class BestOfNSampler:
     SUPPORTED_MODELS = ["Sachin21112004/distilbart-news-summarizer","google/pegasus-xsum"]
-    def __init__(self,models_names:List[str],evaluation_metric:str):
+    def __init__(self,models_names:List[str]):
         for model_name in models_names:
             if model_name not in self.SUPPORTED_MODELS:
                 raise ValueError("Invalid model: {}".format(model_name))
@@ -42,7 +44,6 @@ class BestOfNSampler:
             tokenizer = AutoTokenizer.from_pretrained(model_name)
             self.models.append(model)
             self.tokenizers.append(tokenizer)
-        self.evaluation_metric = evaluation_metric
         self.eval_embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         logger.info("BestOfNSampler successfully initialized")
 
