@@ -36,17 +36,6 @@ The goal is to help AI developers **focus on building AI applications**, while I
 
 ---
 
-# Features
-
-- 🔹 **Inference-time scaling**
-- 🔹 **Best-of-N response selection**
-- 🔹 **Multi-model candidate generation**
-- 🔹 **Plug-and-play with HuggingFace models**
-- 🔹 **Lightweight and easy to integrate**
-- 🔹 **Works for tasks like summarization, QA, and text generation**
-
----
-
 # Architecture
 
 The current architecture of InferScale is shown below:
@@ -59,6 +48,115 @@ Pipeline overview:
 2. Each model can generate **N samples**
 3. All responses are collected
 4. A scoring mechanism selects the **best candidate**
+
+---
+Here is the **updated Markdown text ready to copy directly** with the two currently supported models mentioned.
+
+```
+## How InferScale Works
+
+InferScale implements a simple **inference-time scaling strategy** to improve LLM response quality without additional training or expensive models.
+
+The core idea is simple:
+
+Generate multiple candidate responses from multiple models and automatically select the best one.
+
+This approach leverages **model diversity and response sampling** to increase the probability of obtaining a higher-quality output.
+
+---
+
+### Step-by-Step Process
+
+1. Load Multiple Models
+
+InferScale loads several models that can perform the same task (for example, summarization).
+
+The current version supports the following summarization models:
+
+- Sachin21112004/distilbart-news-summarizer  
+- google/pegasus-xsum  
+
+These models provide different summarization behaviors, allowing InferScale to benefit from model diversity.
+
+---
+
+2. Generate Multiple Responses
+
+Each model generates **N candidate responses** for the same input.
+
+Example:
+
+Input Article
+
+Model: distilbart-news-summarizer  
+- Response A1  
+- Response A2  
+- Response A3  
+
+Model: pegasus-xsum  
+- Response B1  
+- Response B2  
+- Response B3  
+
+This creates a pool of candidate outputs.
+
+---
+
+3. Compute Semantic Similarity
+
+All responses are embedded using a sentence embedding model.  
+InferScale then computes **cosine similarity scores** to estimate the semantic quality of each response.
+
+---
+
+4. Select the Best Response
+
+The response with the **highest similarity score** is selected as the final output.
+
+Candidate Responses  
+↓  
+Embedding + Cosine Similarity  
+↓  
+Best Scoring Response  
+↓  
+Final Output  
+
+---
+
+### Why This Works
+
+Instead of relying on a **single model output**, InferScale improves output quality by:
+
+- sampling **multiple responses**
+- using **multiple models**
+- selecting the **best semantic candidate**
+
+This provides a simple and effective alternative to:
+
+- expensive fine-tuning
+- heavy prompt engineering
+- relying on very large proprietary models
+
+---
+
+### Current Scope (v0)
+
+The current version implements a **minimal baseline approach**:
+
+- Two summarization models  
+- N sampled responses per model  
+- Cosine similarity scoring  
+- Best response selection  
+
+The goal of this release is to provide a **simple, lightweight foundation** for experimenting with inference-time scaling.
+
+Future versions will introduce:
+
+- smarter scoring strategies  
+- task-aware evaluation metrics  
+- dynamic model routing  
+- cost-aware inference strategies
+```
 
 ---
 
