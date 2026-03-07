@@ -68,7 +68,7 @@ Pipeline overview:
 
 `pip install inferscale datasets sentence-transformers rich`
 
-
+## Example
 ```
 import json
 from inferscale.best_of_n import BestOfNSampler
