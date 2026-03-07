@@ -50,9 +50,7 @@ Pipeline overview:
 4. A scoring mechanism selects the **best candidate**
 
 ---
-Here is the **updated Markdown text ready to copy directly** with the two currently supported models mentioned.
 
-```
 ## How InferScale Works
 
 InferScale implements a simple **inference-time scaling strategy** to improve LLM response quality without additional training or expensive models.
@@ -139,7 +137,7 @@ This provides a simple and effective alternative to:
 
 ---
 
-### Current Scope (v0)
+### Current Scope (v0.1.1)
 
 The current version implements a **minimal baseline approach**:
 
