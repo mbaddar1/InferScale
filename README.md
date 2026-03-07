@@ -26,34 +26,83 @@ Instead of modifying the model itself, inference-time scaling improves output qu
 
 This approach allows developers to **improve response quality without expensive training or larger models**, making it particularly attractive for **cost-constrained or production environments**.
 
-## The Solution
-Inferscale is intended to be a light-weight Python package aimed at AI developers to help them focus on their AI-App development without worrying much about which model to use for the task and how to combine LLM responses to get the best one. The current architecture as follows 
+# InferScale
 
-<img width="1200" height="327" alt="InferScale drawio" src="https://github.com/user-attachments/assets/1006af4b-4718-49a3-880c-389c3987be3d" />
+**InferScale** is a lightweight Python library that improves LLM output quality using **inference-time scaling techniques** such as **Best-of-N sampling across multiple models**.
 
-## Example 
+Instead of relying on expensive fine-tuning or larger models, InferScale generates multiple candidate responses and automatically selects the best one using lightweight scoring methods.
 
-**installation**
-`
-pip install inferscale datasets sentence-transformers rich
-`
-**code** 
+The goal is to help AI developers **focus on building AI applications**, while InferScale handles **candidate generation and response selection**.
 
-`
+---
+
+# Features
+
+- 🔹 **Inference-time scaling**
+- 🔹 **Best-of-N response selection**
+- 🔹 **Multi-model candidate generation**
+- 🔹 **Plug-and-play with HuggingFace models**
+- 🔹 **Lightweight and easy to integrate**
+- 🔹 **Works for tasks like summarization, QA, and text generation**
+
+---
+
+# Architecture
+
+The current architecture of InferScale is shown below:
+
+<img width="1200" height="327" alt="InferScale architecture" src="https://github.com/user-attachments/assets/1006af4b-4718-49a3-880c-389c3987be3d" />
+
+Pipeline overview:
+
+1. Multiple LLM models generate candidate responses
+2. Each model can generate **N samples**
+3. All responses are collected
+4. A scoring mechanism selects the **best candidate**
+
+---
+
+# Example
+
+## Installation
+
+`pip install inferscale datasets sentence-transformers rich`
+
+
+```
 import json
 from inferscale.best_of_n import BestOfNSampler
 from datasets import load_dataset
 from rich import print_json
-if __name__ == '__main__':
-    models_names = ["Sachin21112004/distilbart-news-summarizer","google/pegasus-xsum"]
-    bon = BestOfNSampler(models_names=models_names)
+
+
+if __name__ == "__main__":
+
+    # Candidate models
+    model_names = [
+        "Sachin21112004/distilbart-news-summarizer",
+        "google/pegasus-xsum"
+    ]
+
+    # Initialize Best-of-N sampler
+    bon = BestOfNSampler(models_names=model_names)
+
+    # Load dataset
     dataset = load_dataset("cnn_dailymail", "3.0.0")
-    queries = [dataset["train"][0]["article"],dataset["train"][1]["article"],dataset["train"][2]["article"]]
-    results = bon.generate(queries=queries,n=3)
-    print_json(json.dumps(results,indent=4))
 
-`
+    # Example queries
+    queries = [
+        dataset["train"][0]["article"],
+        dataset["train"][1]["article"],
+        dataset["train"][2]["article"]
+    ]
 
+    # Generate responses
+    results = bon.generate(queries=queries, n=3)
+
+    # Pretty print results
+    print_json(json.dumps(results, indent=4))
+```
 
 # Main Resources
 
