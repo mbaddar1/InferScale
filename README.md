@@ -154,7 +154,6 @@ Future versions will introduce:
 - task-aware evaluation metrics  
 - dynamic model routing  
 - cost-aware inference strategies
-```
 
 ---
 
