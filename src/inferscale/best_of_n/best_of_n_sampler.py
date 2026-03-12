@@ -21,6 +21,7 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #   . Bug - Why Google pegasus model is unstable
 #   . Add verbosity levels
 #   . Add eval metrics
+#   . make dep install auto
 #   2. Add resilience to model pretrained load, verbose info and TIMEOUT mechanism TODO
 #   3. Test with larger text DONE
 #   . Bug - Problem with some long queries, vocab out of index

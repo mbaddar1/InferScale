@@ -1,0 +1,20 @@
+site_name: inferscale
+site_url: https://github.com/mbaddar1/InferScale
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - API: api.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
