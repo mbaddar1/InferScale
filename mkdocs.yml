@@ -1,7 +1,7 @@
 site_name: inferscale
 site_url: https://github.com/mbaddar1/InferScale
 theme:
-  name: material
+  name: readthedocs
 
 nav:
   - Home: index.md
@@ -13,6 +13,11 @@ plugins:
       handlers:
         python:
           paths: [src]
+          options :
+            show_root_heading: true
+            show_root_full_path: false
+            show_object_full_path: false
+            show_source: false
 
 markdown_extensions:
   - admonition
