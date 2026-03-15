@@ -1,3 +1,4 @@
+![InferScale Logo](assets/logo.png)
 # InferScale is an open-source inference scaling platform for large language models.
 
 ## The Problem
