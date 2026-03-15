@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" width="300">
+  <img src="assets/inferscale_logo.png" width="300">
 </p>
 # InferScale is an open-source inference scaling platform for large language models.
 
