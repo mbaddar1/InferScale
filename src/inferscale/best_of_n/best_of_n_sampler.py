@@ -64,7 +64,19 @@ class BestOfNSampler:
         #   1. Use lambda map to reduce loops
         #   2. Support parallel processing (parallel sampling)
         #   3. Smart model selector (based on query intent identification and the task at hand
-        # best_results = []
+        batch_encodings = self.tokenizer(queries, return_tensors="pt", max_length=1024, padding=True,truncation=True)
+        token_ids = batch_encodings["input_ids"]
+        response_ids = self.model.generate(token_ids["input_ids"],
+                            max_length=150,
+                            min_length=40,
+                            no_repeat_ngram_size=3,
+                            length_penalty=2.0,
+                            num_beams=4,
+                            do_sample=True,
+                            top_p=0.95,
+                            temperature=1.5,
+                            early_stopping=True
+                        )
         for u, q in tqdm(enumerate(queries), desc="queries"):
             candidates = []
             for i in tqdm(range(n), desc="response-samples"):
