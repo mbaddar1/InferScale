@@ -54,7 +54,9 @@ class BestOfNSampler:
                 raise ValueError("Invalid model: {}".format(model_name))
         self.model_name = model_name
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name,use_fast=True)
+        # TODO : (Investigate) use_fast seems to have no effect, with or without it I can see .is_fast is True
+        print(self.tokenizer.is_fast)
         self.eval_embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         logger.info("BestOfNSampler successfully initialized")
 
