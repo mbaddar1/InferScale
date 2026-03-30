@@ -1,3 +1,4 @@
+import sys
 from typing import List
 
 import numpy as np
@@ -64,9 +65,12 @@ class BestOfNSampler:
         #   1. Use lambda map to reduce loops
         #   2. Support parallel processing (parallel sampling)
         #   3. Smart model selector (based on query intent identification and the task at hand
-        batch_encodings = self.tokenizer(queries, return_tensors="pt", max_length=1024, padding=True,truncation=True)
-        token_ids = batch_encodings["input_ids"]
-        response_ids = self.model.generate(token_ids["input_ids"],
+        # Batch Encoding
+        repeated_queries = result = [q for q in queries for _ in range(n)]
+        batch_encodings = self.tokenizer(repeated_queries, return_tensors="pt", max_length=1024, padding=True,truncation=True)
+        batch_encodings_list = list(batch_encodings["input_ids"])
+
+        response_token_ids = list(map(lambda x:self.model.generate(x.view(-1,1).T,
                             max_length=150,
                             min_length=40,
                             no_repeat_ngram_size=3,
@@ -75,8 +79,10 @@ class BestOfNSampler:
                             do_sample=True,
                             top_p=0.95,
                             temperature=1.5,
-                            early_stopping=True
-                        )
+                            early_stopping=True),batch_encodings_list))
+        decoded_results = list(map(lambda x:self.tokenizer.decode(x.view(-1),skip_special_tokens=True),response_token_ids))
+        print(len(decoded_results))
+        sys.exit(-1)
         for u, q in tqdm(enumerate(queries), desc="queries"):
             candidates = []
             for i in tqdm(range(n), desc="response-samples"):
