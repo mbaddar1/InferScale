@@ -66,10 +66,10 @@ class BestOfNSampler:
         #   2. Support parallel processing (parallel sampling)
         #   3. Smart model selector (based on query intent identification and the task at hand
         # Batch Encoding
-        repeated_queries = result = [q for q in queries for _ in range(n)]
+        repeated_queries = [q for q in queries for _ in range(n)]
+        logger.info(f"Applying batch tokenization for {len(queries)} queries with {n} samples each")
         batch_encodings = self.tokenizer(repeated_queries, return_tensors="pt", max_length=1024, padding=True,truncation=True)
         batch_encodings_list = list(batch_encodings["input_ids"])
-
         response_token_ids = list(map(lambda x:self.model.generate(x.view(-1,1).T,
                             max_length=150,
                             min_length=40,
@@ -81,48 +81,13 @@ class BestOfNSampler:
                             temperature=1.5,
                             early_stopping=True),batch_encodings_list))
         decoded_results = list(map(lambda x:self.tokenizer.decode(x.view(-1),skip_special_tokens=True),response_token_ids))
-        print(len(decoded_results))
-        sys.exit(-1)
-        for u, q in tqdm(enumerate(queries), desc="queries"):
-            candidates = []
-            for i in tqdm(range(n), desc="response-samples"):
-                inputs = self.tokenizer(q, return_tensors="pt", max_length=1024, truncation=True)
-                try:
-                    summary_ids = self.model.generate(inputs["input_ids"],
-                            max_length=150,
-                            min_length=40,
-                            no_repeat_ngram_size=3,
-                            length_penalty=2.0,
-                            num_beams=4,
-                            do_sample=True,
-                            top_p=0.95,
-                            temperature=1.5,
-                            early_stopping=True
-                        )
-                    result = self.tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-                    candidates.append(result)
-                except Exception as e:
-                    logger.error(f"Exception : For query = {q}, model = {self.model_name},"
-                                 f"sample # {i},exception = {e}")
-            max_score = -np.inf
-            sorted_candidates = []
-            if len(candidates) > 0:
-                doc_emb = self.eval_embedding_model.encode([q] * n)
-                sum_emb = self.eval_embedding_model.encode(candidates)
-                eval_scores = cosine_similarity(sum_emb, doc_emb)[:, 0]
-                sorted_candidates = [c for _, c in sorted(zip(eval_scores, candidates), reverse=True)]
-            else:
-                logger.warning(f"No candidate for query {q}")
-            return sorted_candidates
-        #
-        #         #
-        #         # max_eval_score_index = np.argmax(eval_score)
-        #         # max_eval_score_per_model = eval_score[max_eval_score_index]
-        #         # if max_eval_score_per_model > max_score:
-        #         #     max_score = max_eval_score_per_model
-        #         #     best_candidate = candidates[max_eval_score_index]
-        #         #     best_model = self.models_names[j]
-        #     else:
-        #         logger.warning("No candidates generated for query = {}".format(q))
-        # best_results.append({"response": best_candidate, "score": float(max_score), "model": best_model})
-        # return best_results
+        doc_emb = self.eval_embedding_model.encode(queries)
+        sum_emb = self.eval_embedding_model.encode(decoded_results)
+        eval_scores = cosine_similarity(sum_emb, doc_emb)[:, 0]
+        total_response = []
+        for i,q in enumerate(queries):
+            ranked_pairs = sorted(zip(decoded_results[i*n:(i+1)*n], eval_scores[i*n:(i+1)*n]), key=lambda x: x[1], reverse=True)
+            responses, scores = zip(*ranked_pairs)
+            entry = {"query": q,"responses": list(responses), "scores": list(scores)}
+            total_response.append(entry)
+        return total_response
