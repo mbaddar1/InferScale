@@ -68,16 +68,9 @@ This approach leverages **model diversity and response sampling** to increase th
 
 ### Step-by-Step Process
 
-1. Load Multiple Models
+1. Load the model 
 
-InferScale loads several models that can perform the same task (for example, summarization).
-
-The current version supports the following summarization models:
-
-- Sachin21112004/distilbart-news-summarizer  
-- google/pegasus-xsum  
-
-These models provide different summarization behaviors, allowing InferScale to benefit from model diversity.
+The library loads one of the models from Hugging-Face
 
 ---
 
@@ -89,15 +82,10 @@ Example:
 
 Input Article
 
-Model: distilbart-news-summarizer  
 - Response A1  
 - Response A2  
 - Response A3  
 
-Model: pegasus-xsum  
-- Response B1  
-- Response B2  
-- Response B3  
 
 This creates a pool of candidate outputs.
 
@@ -121,46 +109,6 @@ Embedding + Cosine Similarity
 Best Scoring Response  
 ↓  
 Final Output  
-
----
-
-### Why This Works
-
-Instead of relying on a **single model output**, InferScale improves output quality by:
-
-- sampling **multiple responses**
-- using **multiple models**
-- selecting the **best semantic candidate**
-
-This provides a simple and effective alternative to:
-
-- expensive fine-tuning
-- heavy prompt engineering
-- relying on very large proprietary models
-
----
-
-### Current Scope (v0.1.1)
-
-The current version implements a **minimal baseline approach**:
-
-- Two summarization models  
-- N sampled responses per model  
-- Cosine similarity scoring  
-- Best response selection  
-
-The goal of this release is to provide a **simple, lightweight foundation** for experimenting with inference-time scaling.
-
-Future versions will introduce:
-
-- smarter scoring strategies  
-- task-aware evaluation metrics  
-- dynamic model routing  
-- cost-aware inference strategies
-
----
-
-# Example
 
 ## Installation
 
@@ -201,7 +149,8 @@ if __name__ == "__main__":
     # Pretty print results
     print_json(json.dumps(results, indent=4))
 ```
-
+## Change Log 
+If you are intrested in the details of development and changes in each version, check the [CHANGE LOG](https://github.com/mbaddar1/InferScale/blob/main/changelog.md)
 # Main Resources
 
 1. https://open.substack.com/pub/sebastianraschka/p/categories-of-inference-time-scaling
