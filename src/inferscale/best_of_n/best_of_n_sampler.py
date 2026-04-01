@@ -1,3 +1,4 @@
+import json
 import sys
 from typing import List
 
@@ -90,4 +91,4 @@ class BestOfNSampler:
             responses, scores = zip(*ranked_pairs)
             entry = {"query": q,"responses": list(responses), "scores": list(scores)}
             total_response.append(entry)
-        return total_response
+        return [json.dump(entry) for entry in total_response]
