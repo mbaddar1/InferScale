@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [0.1.4] - 01-06-2026
+### To Add
+* Benchmark 3 summarization models over news dataset using cosine similarity and SummaC. 
+## [0.1.3] - 01-05-2026 (TODO)
+### To Add 
+* Use SummaC as a reference-free summarization quality metric. For more info see this [link](https://medium.com/@ankita.bagaria8/evaluation-methods-for-text-summarization-with-and-without-reference-summaries-66cb38505749)
+
 ## [0.1.2] - 01-04-2026
 ### Added 
 * None
