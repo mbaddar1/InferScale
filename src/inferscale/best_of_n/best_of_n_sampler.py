@@ -36,8 +36,8 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 class BestOfNSampler:
     SUPPORTED_MODELS = ["Sachin21112004/distilbart-news-summarizer", "google/pegasus-xsum"]
     SUPPORTED_EVALUATION_METRICS = ["cosine_similarity", "rouge1", "rouge2", "rougeL"]
-
-    def __init__(self, model_name: str, evalution_metric: str):
+    ROUGE_SUBMEASURES_INDICES = {"fmeasure":0,"precision":1,"recall":2}
+    def __init__(self, model_name: str, evalution_metric: str,**kwargs):
         """
             Best-of-N inference sampler.
 
@@ -60,6 +60,13 @@ class BestOfNSampler:
         assert evalution_metric in BestOfNSampler.SUPPORTED_EVALUATION_METRICS, \
             f"{evalution_metric} is not supported. Supported ones are {BestOfNSampler.SUPPORTED_EVALUATION_METRICS}"
         self.evaluation_metric = evalution_metric
+        if self.evaluation_metric in ["rouge1", "rouge2", "rougeL"]:
+            self.rouge_scorer= rouge_scorer.RougeScorer([self.evaluation_metric], use_stemmer=True)
+            if "rouge_sub_measure" not in kwargs.keys():
+                self.rouge_submeasure = "fmeasure"
+            else:
+                self.rouge_submeasure = kwargs["rouge_sub_measure"]
+            logger.info(f"Using {self.rouge_submeasure} with {self.evaluation_metric}")
         logger.info("BestOfNSampler successfully initialized")
 
     def __calculate_evaluation_score(self, queries: List[str], responses: List[str]):
@@ -71,8 +78,11 @@ class BestOfNSampler:
             eval_scores = [float(s) for s in eval_scores]
             return eval_scores
         elif self.evaluation_metric in ["rouge1", "rouge2", "rougel"]:
-            scorer = rouge_scorer.RougeScorer([self.evaluation_metric], use_stemmer=True)
-            scores = [float(scorer.score(target=queries[i], prediction=responses[i])) for i in range(len(queries))]
+            scores =[]
+            for i in range(len(queries)):
+                score_res = self.rouge_scorer.score(target=queries[i], prediction=responses[i])
+                score_val = score_res[self.evaluation_metric][BestOfNSampler.ROUGE_SUBMEASURES_INDICES[self.rouge_submeasure]]
+                scores.append(float(score_val))
             return scores
         else:
             raise ValueError(f"Invalid evaluation metric: {self.evaluation_metric}")
