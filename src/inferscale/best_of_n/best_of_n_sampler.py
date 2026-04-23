@@ -34,10 +34,11 @@ https://huggingface.co/docs/trl/main/en/best_of_n
 #   8. Better logging
 #   9. Add requirements.txt
 class BestOfNSampler:
-    SUPPORTED_MODELS = ["Sachin21112004/distilbart-news-summarizer", "google/pegasus-xsum"]
+    SUPPORTED_MODELS = ["facebook/bart-large-cnn", "sshleifer/distilbart-cnn-12-6"]
     SUPPORTED_EVALUATION_METRICS = ["cosine_similarity", "rouge1", "rouge2", "rougeL"]
-    ROUGE_SUBMEASURES_INDICES = {"fmeasure":0,"precision":1,"recall":2}
-    def __init__(self, model_name: str, evalution_metric: str,**kwargs):
+    ROUGE_SUBMEASURES_INDICES = {"fmeasure": 0, "precision": 1, "recall": 2}
+
+    def __init__(self, model_name: str, evalution_metric: str, **kwargs):
         """
             Best-of-N inference sampler.
 
@@ -49,19 +50,21 @@ class BestOfNSampler:
             model_name : list[str]
                 List of model names used for generation.
             """
-        if model_name in BestOfNSampler.SUPPORTED_MODELS:
-            if model_name not in self.SUPPORTED_MODELS:
-                raise ValueError("Invalid model: {}".format(model_name))
+
+        if model_name not in self.SUPPORTED_MODELS:
+            raise ValueError("Invalid model: {}".format(model_name))
         self.model_name = model_name
         self.model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
+        logger.info(f"Successfully loaded (pretrained) model {model_name}")
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+        logger.info(f"Successfully loaded (pretrained) tokenizer from model {model_name}")
         # TODO : (Investigate) use_fast seems to have no effect, with or without it I can see .is_fast is True
         self.eval_embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         assert evalution_metric in BestOfNSampler.SUPPORTED_EVALUATION_METRICS, \
             f"{evalution_metric} is not supported. Supported ones are {BestOfNSampler.SUPPORTED_EVALUATION_METRICS}"
         self.evaluation_metric = evalution_metric
         if self.evaluation_metric in ["rouge1", "rouge2", "rougeL"]:
-            self.rouge_scorer= rouge_scorer.RougeScorer([self.evaluation_metric], use_stemmer=True)
+            self.rouge_scorer = rouge_scorer.RougeScorer([self.evaluation_metric], use_stemmer=True)
             if "rouge_sub_measure" not in kwargs.keys():
                 self.rouge_submeasure = "fmeasure"
             else:
@@ -77,11 +80,12 @@ class BestOfNSampler:
             eval_scores = cosine_similarity(sum_emb, doc_emb)[:, 0]
             eval_scores = [float(s) for s in eval_scores]
             return eval_scores
-        elif self.evaluation_metric in ["rouge1", "rouge2", "rougel"]:
-            scores =[]
+        elif self.evaluation_metric in ["rouge1", "rouge2", "rougeL"]:
+            scores = []
             for i in range(len(queries)):
                 score_res = self.rouge_scorer.score(target=queries[i], prediction=responses[i])
-                score_val = score_res[self.evaluation_metric][BestOfNSampler.ROUGE_SUBMEASURES_INDICES[self.rouge_submeasure]]
+                score_val = score_res[self.evaluation_metric][
+                    BestOfNSampler.ROUGE_SUBMEASURES_INDICES[self.rouge_submeasure]]
                 scores.append(float(score_val))
             return scores
         else:
