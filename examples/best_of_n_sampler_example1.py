@@ -4,7 +4,7 @@ from inferscale.best_of_n import BestOfNSampler
 from datasets import load_dataset
 if __name__ == '__main__':
     # models_names = ["Sachin21112004/distilbart-news-summarizer","google/pegasus-xsum"]
-    model_name = "Sachin21112004/distilbart-news-summarizer"
+    model_name = "sshleifer/distilbart-cnn-12-6"
     evaluation_metric = "rougeL"
     bon = BestOfNSampler(model_name=model_name,evalution_metric=evaluation_metric)
     dataset = load_dataset("cnn_dailymail", "3.0.0")
