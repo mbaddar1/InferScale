@@ -46,8 +46,16 @@ We plan to support the following tasks in the following releases
 * Information Extraction
 * Paraphrasing
 
-## Text Summarization process
-The models we support currently (from the pool of models in Hugging Face) are `Sachin21112004/distilbart-news-summarizer`, `google/pegasus-xsum` 
+### <span style="color:#fadb14;">▶</span>  Text Summarization + Inference-Scaling
+
+The models we support currently (from the pool of models in Hugging Face) are `facebook/bart-large-cnn`, `sshleifer/distilbart-cnn-12-6`. Why ? If you see the [list](https://huggingface.co/models?pipeline_tag=summarization&sort=likes) of Hugging-Face summarization models, you will find that these are the most liked ones. We know this might be a naive approach for selecting the models to support, in the future we plan a more rigorous benchmarking. 
+
+As __InferScale__ is designed to be "scalable", we focus , in the beginning, on the  __reference-free__ metrics for Automateed-Summarization Evaluation . You can check this simple [article](https://medium.com/@ankita.bagaria8/evaluation-methods-for-text-summarization-with-and-without-reference-summaries-66cb38505749) for more information. We support two metrics : 
+
+* **Cosine Similarity** : We simple embed the query and result summarization using `all-MiniLM-L6-v2` then calculate `Cos(embedding(query),embedding(response))`
+
+* **ROUGE** : This is one of the most classical metrics in text-summarization tasks . We apply ROUGE in and unsupervised (reference-free) fashion : we calculate ROUGE based on the input query as a reference text against the response as the predicted text. We use the `rouge-score` library in our current implementation. In the future, we will create our own to control the calculation poroces.
+
 # Installation
 
 `pip install inferscale datasets sentence-transformers rich`
