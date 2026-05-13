@@ -2,21 +2,21 @@
   <img src="assets/InfScaleNewLogo.png" width="300">
 </p>
 
-# What is InferScale
+# What is InfScale
 
-**InferScale** is a Python package that provides a unified and practical framework for applying *inference-time scaling* to large language models (LLMs).
+**InfScale** is a Python package that provides a unified and practical framework for applying *inference-time scaling* to large language models (LLMs).
 
-At its core, InferScale moves beyond single-shot generation. It produces multiple candidate responses—either complete or partial—from one or more LLMs, and then intelligently **selects or aggregates** them to yield a higher-quality final output.
+At its core, InfScale moves beyond single-shot generation. It produces multiple candidate responses—either complete or partial—from one or more LLMs, and then intelligently **selects or aggregates** them to yield a higher-quality final output.
 
 This strategy allows developers to enhance performance across a variety of tasks—including **text summarization, question answering, information extraction, and paraphrasing**—without the need for model fine-tuning or retraining.
 
-By optimizing at inference time, InferScale offers a **scalable and cost-efficient alternative** to traditional training-heavy approaches. We view this paradigm as a highly practical and impactful way to improve LLM applications in real-world settings. This approach leverages **model diversity and response sampling** to increase the probability of obtaining a higher-quality output.
+By optimizing at inference time, InfScale offers a **scalable and cost-efficient alternative** to traditional training-heavy approaches. We view this paradigm as a highly practical and impactful way to improve LLM applications in real-world settings. This approach leverages **model diversity and response sampling** to increase the probability of obtaining a higher-quality output.
 
 # Architecture
 
-The current architecture of InferScale is shown below:
+The current architecture of InfScale is shown below:
 
-<img width="1200" height="327" alt="InferScale architecture" src="https://github.com/user-attachments/assets/1006af4b-4718-49a3-880c-389c3987be3d" />
+<img width="1200" height="327" alt="InfScale architecture" src="https://github.com/user-attachments/assets/1006af4b-4718-49a3-880c-389c3987be3d" />
 
 Pipeline overview:
 
@@ -37,7 +37,7 @@ Pipeline overview:
 4. **Generate the final response** :The response with the **highest score** is selected as the final output. (In the future we will implement appraoches the __blend__ top K responses from one or differnet models **stay tuned!!**)
 
 # Details 
-Currently we support the following **Tasks** to be done using __InferScale__ 
+Currently we support the following **Tasks** to be done using __InfScale__ 
 * Text Summarization
 
 
@@ -50,7 +50,7 @@ We plan to support the following tasks in the following releases
 
 The models we support currently (from the pool of models in Hugging Face) are `facebook/bart-large-cnn`, `sshleifer/distilbart-cnn-12-6`. Why ? If you see the [list](https://huggingface.co/models?pipeline_tag=summarization&sort=likes) of Hugging-Face summarization models, you will find that these are the most liked ones. We know this might be a naive approach for selecting the models to support, in the future we plan a more rigorous benchmarking. 
 
-As __InferScale__ is designed to be "scalable", we focus , in the beginning, on the  __reference-free__ metrics for Automateed-Summarization Evaluation . You can check this simple [article](https://medium.com/@ankita.bagaria8/evaluation-methods-for-text-summarization-with-and-without-reference-summaries-66cb38505749) for more information. We support two metrics : 
+As __InfScale__ is designed to be "scalable", we focus , in the beginning, on the  __reference-free__ metrics for Automateed-Summarization Evaluation . You can check this simple [article](https://medium.com/@ankita.bagaria8/evaluation-methods-for-text-summarization-with-and-without-reference-summaries-66cb38505749) for more information. We support two metrics : 
 
 * **Cosine Similarity** : We simple embed the query and result summarization using `all-MiniLM-L6-v2` then calculate `Cos(embedding(query),embedding(response))`
 
@@ -58,12 +58,12 @@ As __InferScale__ is designed to be "scalable", we focus , in the beginning, on 
 
 # Installation
 
-`pip install inferscale datasets sentence-transformers rich`
+`pip install InfScale datasets sentence-transformers rich`
 
 # Example
 ```
 import json
-from inferscale.best_of_n import BestOfNSampler
+from InfScale.best_of_n import BestOfNSampler
 from datasets import load_dataset
 from rich import print_json
 
@@ -96,7 +96,7 @@ if __name__ == "__main__":
     print_json(json.dumps(results, indent=4))
 ```
 # Change Log 
-If you are intrested in the details of development and changes in each version, check the [CHANGE LOG](https://github.com/mbaddar1/InferScale/blob/main/changelog.md)
+If you are intrested in the details of development and changes in each version, check the [CHANGE LOG](https://github.com/mbaddar1/InfScale/blob/main/changelog.md)
 # Main Resources
 
 1. https://open.substack.com/pub/sebastianraschka/p/categories-of-inference-time-scaling
