@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/inferscale_logo.png" width="300">
+  <img src="assets/InfScaleNewLogo.png" width="300">
 </p>
 
 # What is InferScale
